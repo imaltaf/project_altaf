@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>WhatsApp Link Generator</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        background-color: #f5f5f5;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 2rem;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        text-align: center;
+      }
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1.5rem;
+      }
+      label {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+        display: block;
+        text-align: left;
+      }
+      input[type="tel"],
+      textarea {
+        border: 1px solid #ccc;
+        padding: 0.5rem;
+        border-radius: 4px;
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+      }
+      input[type="tel"]:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #007aff;
+      }
+      .btn-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .btn {
+        padding: 0.5rem 1.5rem;
+        border-radius: 4px;
+        border: none;
+        color: #fff;
+        font-size: 1.1rem;
+        cursor: pointer;
+        margin-right: 0.5rem;
+        transition: background-color 0.2s;
+        background-color: #007aff;
+      }
+      .btn:hover {
+        background-color: #0069d9;
+      }
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .hidden {
+        display: none;
+      }
+      .result {
+        font-size: 1.2rem;
+        margin-top: 1.5rem;
+      }
+      .result-label {
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        display: block;
+        text-align: left;
+      }
+      .copy-btn {
+        margin-left: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>WhatsApp Link Generator</h1>
+      <form>
+        <label for="phone-input">Phone Number (with country code)</label>
+        <input
+          type="tel"
+          id="phone-input"
+          placeholder="e.g. 15551234567"
+          pattern="^[1-9]\d{1,14}$"
+          required
+        />
+        <label for="message-input">Message (optional)</label>
+        <textarea id="message-input" rows="3"></textarea>
+        <div class="btn-container">
+          <button class="btn" id="generate-btn" type="button">
+            Generate Link
+          </button>
+          <button class="btn hidden" id="click-btn" type="button">
+            Click to Chat
+          </button>
+          <button class="btn copy-btn" id="copy-btn" type
+          "button" disabled>
+          Copy Link
+          </button>
+          <button class="btn" id="reset-btn" type="button">
+          Reset
+          </button>
+          </div>
+          </form>
+          <div class="result hidden">
+          <span class="result-label">WhatsApp Link:</span>
+          <span id="result-link"></span>
+          </div>
+          </div>
+          <script>
+          const phoneInput = document.getElementById("phone-input");
+          const messageInput = document.getElementById("message-input");
+          const generateBtn = document.getElementById("generate-btn");
+          const clickBtn = document.getElementById("click-btn");
+          const copyBtn = document.getElementById("copy-btn");
+          const resetBtn = document.getElementById("reset-btn");
+          const result = document.querySelector(".result");
+          const resultLink = document.getElementById("result-link");
+
+            // Function to generate the WhatsApp link
+  function generateLink() {
+    const phone = phoneInput.value;
+    const message = messageInput.value;
+    const url = `https://wa.me/${phone}?`;
+    const messageEncoded = encodeURIComponent(message);
+    if (message !== "") {
+      const fullUrl = `${url}text=${messageEncoded}`;
+      resultLink.textContent = fullUrl;
+      clickBtn.href = fullUrl;
+      clickBtn.classList.remove("hidden");
+      copyBtn.disabled = false;
+    } else {
+      resultLink.textContent = url;
+      clickBtn.href = url;
+      clickBtn.classList.remove("hidden");
+      copyBtn.disabled = false;
+    }
+    result.classList.remove("hidden");
+  }
+
+  // Function to copy the WhatsApp link to clipboard
+  function copyLink() {
+    const el = document.createElement("textarea");
+    el.value = resultLink.textContent;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand("copy");
+    document.body.removeChild(el);
+    alert("Link copied to clipboard!");
+  }
+
+  // Function to reset the form
+  function resetForm() {
+    phoneInput.value = "";
+    messageInput.value = "";
+    result.classList.add("hidden");
+    clickBtn.classList.add("hidden");
+    copyBtn.disabled = true;
+  }
+
+  // Event listeners
+  generateBtn.addEventListener("click", generateLink);
+  copyBtn.addEventListener("click", copyLink);
+  resetBtn.addEventListener("click", resetForm);
+</script>
