@@ -14,9 +14,16 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            echo "FROM nginx:2.1" >> Dockerfile
-            echo "COPY . /usr/share/nginx/html/" >> Dockerfile
-            docker build -t your-image-name .
+            echo "FROM httpd:2.4" >> Dockerfile
+            echo "EXPOSE 8001" >> Dockerfile
+            echo "COPY ./website /usr/local/apache2/htdocs/" >> Dockerfile
+            docker build -t my_portfilo .
+      - run:
+          name: Push Docker image to registry
+          command: |
+            echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            docker tag your-image-name "$DOCKERHUB_USERNAME/your-image-name:latest"
+            docker push "$DOCKERHUB_USERNAME/your-image-name:latest"        
 
 workflows:
   version: 2
