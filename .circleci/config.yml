@@ -17,14 +17,15 @@ jobs:
             echo "FROM httpd:2.4" >> Dockerfile
             echo "EXPOSE 8001" >> Dockerfile
             echo "COPY . /usr/local/apache2/htdocs/" >> Dockerfile
-            docker build -t project_altaf .
+            docker build -t your-image-name .
 
       - run:
           name: Push Docker image to registry
           command: |
             echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-            docker tag project_altaf "$DOCKERHUB_USERNAME/project_altaf:latest"
-            docker push "$DOCKERHUB_USERNAME/project_altaf:latest"
+            docker tag your-image-name "$DOCKERHUB_USERNAME/your-image-name:latest"
+            docker push "$DOCKERHUB_USERNAME/your-image-name:latest"
+
 
 workflows:
   version: 2
