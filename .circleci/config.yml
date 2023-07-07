@@ -16,7 +16,7 @@ jobs:
           command: |
             echo "FROM httpd:2.4" >> Dockerfile
             echo "EXPOSE 8001" >> Dockerfile
-            echo "COPY . /usr/local/apache2/htdocs/" >> Dockerfile
+            echo "COPY ./website /usr/local/apache2/htdocs/" >> Dockerfile
             docker build -t my_portfilo .
 
 
