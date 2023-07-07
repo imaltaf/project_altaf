@@ -19,13 +19,6 @@ jobs:
             echo "COPY . /usr/local/apache2/htdocs/" >> Dockerfile
             docker build -t my_portfilo .
 
-      - run:
-          name: Push Docker image to registry
-          command: |
-            echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-            docker tag my_portfilo "$DOCKERHUB_USERNAME/my_portfilo:latest"
-            docker push "$DOCKERHUB_USERNAME/my_portfilo:latest"
-
 
 workflows:
   version: 2
