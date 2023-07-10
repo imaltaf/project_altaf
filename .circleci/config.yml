@@ -31,13 +31,14 @@ jobs:
           at: .
 
       - setup_remote_docker
-  
+
+      - add_ssh_keys:
+         fingerprints:
+           - "0e:63:b0:32:04:21:e2:02:03:b5:01:a5:c0:40:8c:ce"
 
       - run:
           name: Deploy to NGINX server
           command: |
-                echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-                chmod 600 ~/.ssh/id_rsa
                 ssh "$USER_NAME"@"$IP" 'sudo apt update'
 
 
