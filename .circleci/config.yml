@@ -34,7 +34,7 @@ jobs:
 
       - add_ssh_keys:
          fingerprints:
-           - "0e:63:b0:32:04:21:e2:02:03:b5:01:a5:c0:40:8c:ce"
+           - "MD5:77:e7:1a:ba:85:eb:da:37:ff:2e:d5:29:04:c8:32:0a"
 
       - run:
           name: Deploy to NGINX server
