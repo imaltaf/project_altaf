@@ -39,7 +39,9 @@ jobs:
       - run:
           name: Deploy to NGINX server
           command: |
-                ssh "$USER_NAME"@"$IP" 'sudo apt update'
+            echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_rsa
+            
 
 
 workflows:
